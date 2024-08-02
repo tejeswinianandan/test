@@ -1,0 +1,69 @@
+create database Student_management_system;
+use Student_management_system;
+create table students(
+id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(100),
+age INT,
+gender VARCHAR(10),
+email VARCHAR(100),
+phone VARCHAR(20));
+
+create table courses(
+id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+credits INT,
+instructor VARCHAR(100)
+);
+
+CREATE TABLE Enrollments (
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+
+
+-- desc command is used to describe the table
+desc students;
+desc courses;
+desc Enrollments;
+
+ -- Inserting data into Students table
+INSERT INTO Students (name, age, gender, email, phone)
+VALUES ('david', 25, 'Male', 'david@example.com', '8905648032');
+
+-- Inserting data into Courses table
+INSERT INTO Courses (id,name, credits)
+VALUES (1,'socialscience', 4);
+
+-- Enrolling a student into a course
+INSERT INTO Enrollments (student_id, course_id, enrollment_date)
+VALUES (1, 1,'2020-02-20');
+
+-- Retrieve all students
+SELECT * FROM Students;
+
+-- Retrieve all courses
+SELECT * FROM Courses;
+
+-- Retrieve all enrollments
+SELECT * FROM Enrollments;
+
+-- Retrieve all courses a student is enrolled in
+SELECT c.name
+FROM Courses as c
+JOIN Enrollments as e
+ ON c.id = e.course_id;
+
+-- Update student's email
+UPDATE Students
+SET email = 'david25.email@example.com'
+WHERE id = 1;
+
+DELETE FROM Enrollments where student_id = 1;
+
+rollback;
+commit;
+
